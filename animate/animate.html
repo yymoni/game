@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>animate</title>
+	</head>
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		#myCanvas{
+			background: peachpuff;
+		}
+	</style>
+	<body>
+		<canvas id="myCanvas" width="500" height="350"></canvas>
+	</body>
+	<script>
+		var canvas=document.getElementById('myCanvas');
+		var cobj=canvas.getContext('2d');
+//		var x=0,y=0,speed=1;
+//		setInterval(function(){
+//			x+=speed;
+//			y+=speed;
+//			cobj.clearRect(0,0,canvas.width,canvas.height);
+//			cobj.save(); /*保存2d对象的状态*/
+//			cobj.translate(x,y);  /*改变2d对象的基准点*/
+//			cobj.fillRect(0,0,50,50);  /*而不是改变图形的位置*/
+//			cobj.restore();
+//			
+//			cobj.save();
+////			cobj.translate(x,y);  /*改变2d对象的基准点*/
+////			cobj.fillStyle="red"; 
+//			cobj.fillRect(50,50,50,50);
+//			cobj.restore();
+//		},50)
+		
+		
+		/*盒子动画*/
+//		function rect(){
+//			this.x=0;
+//			this.y=0;
+//			this.width=100;
+//			this.height=100;
+//			this.speedX=1;
+//			this.speedY=1;
+//		}
+//		rect.prototype={
+//			draw:function(){			
+//				cobj.save();
+//				cobj.translate(this.x,this.y)
+//				cobj.fillRect(0,0,this.width,this.height);
+//				cobj.restore();							
+//			}
+//		}
+//		var animateObj=new rect();
+//		setInterval(function(){
+//			cobj.clearRect(0,0,canvas.width,canvas.height);
+//			cobj.translate(animateObj.speedX,animateObj.speedY)
+//			animateObj.draw();
+//		},50)
+		
+		
+		/*粒子动画*/
+//		function arc(){
+//			this.x=cobj.width/2;
+//			this.y=cobj.width/2;
+//			this.r=2+3*Math.random();
+//			this.width=100;
+//			this.height=100;
+//			this.speedX=1;
+//			this.speedY=1;
+////			this.color=rgb()
+//		}
+//		arc.prototype={
+//			draw:function(){
+//				cobj.beginPath();
+//				cobj.save();
+//				cobj.translate(this.x,this.y);
+//				cobj.arc(this.x,this.y,this.r,0,2*Math.PI);
+//				cobj.restore();							
+//			}
+//		}
+//		var arcObj=new arc();
+//		setInterval(function(){
+//			cobj.clearRect(0,0,canvas.width,canvas.height);
+//			cobj.translate(arcObj.speedX,arcObj.speedY)
+//			arcObj.draw();
+//		},50)
+
+
+		/*火焰*/
+		
+		function huoyan(){
+			this.x=100;
+			this.y=100;
+			this.r=2+3*Math.random();
+			this.color="rgb(266,16,12)";
+			this.life=5;
+			this.speedy=(2+3*Math.random()); /*向下运动为负值*/
+			this.speedr=0.3;
+			this.speedl=0.3;
+		}
+		huoyan.prototype={
+			draw:function(){
+				cobj.save();
+				cobj.beginPath();
+				cobj.fillStyle=this.color;
+				cobj.globalCompositeOperation="lighter"; /*火焰中心高亮*/
+				cobj.translate(this.x,this.y);  /*位移*/
+				cobj.arc(0,0,this.r,0,2*Math.PI);
+				cobj.fill();  /*填充*/
+				cobj.restore();
+			},/*加逗号*/
+			update:function(){
+				this.x+=6*Math.random()-3;/*随机区间*/
+				this.y-=this.speedy;
+				this.r-=this.speedr;
+				this.life-=this.speedl;
+			}
+		}
+		
+		var arr=[]; /*创建空数组用来放创建的火焰*/
+		setInterval(function(){
+			cobj.clearRect(0,0,canvas.width,canvas.height);
+			var huoyans=new huoyan();  /*创建火焰*/
+			arr.push(huoyans);
+			for(var i=0;i<arr.length;i++){
+				arr[i].draw();   /*绘制*/
+				arr[i].update(); /*不断运动*/
+				if(arr[i].r<0||arr[i].life<0){ /*判断：如果*/
+					arr[i]=new huoyan();
+				}
+			}
+		},50)
+		
+		
+//		update
+//		x=6*ran-3
+//		x+=x
+//		r-=r
+//		y-=
+//		l-=l
+//		
+//		[]
+//		setinter
+//		清空
+//		创建粒子
+//		放入数组
+//		循环
+//		绘制
+//		不断运动
+//		判断 
+		
+		
+		
+		
+	</script>
+</html>

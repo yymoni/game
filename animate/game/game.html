@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>跑步游戏</title>
+		<script src="js/hitPix.js"></script>
+		<script src="js/touch.js"></script>
+		<script src="js/game.js"></script>
+	</head>
+	<style>
+		html,body{
+			padding: 0;
+			margin: 0;
+			overflow: hidden;
+			background: #F6F6F6;
+		}
+		canvas{
+			background: url(img/bg/bg.jpg) repeat-x;
+		}
+	</style>
+	<body>
+		<canvas>
+			您的浏览器不支持canvas，请升级浏览器
+		</canvas>
+		
+		<!--人物-->
+		<!--<img src="img/person/run1.png" alt="" class="run" hidden/>-->
+		<!--<img src="img/person/run2.png" alt="" class="run" hidden/>-->
+		<img src="img/person/run3.png" alt="" class="run" hidden/>
+		<img src="img/person/run4.png" alt="" class="run" hidden/>
+		<img src="img/person/run5.png" alt="" class="run" hidden/>
+		<img src="img/person/run6.png" alt="" class="run" hidden/>
+		<img src="img/person/run7.png" alt="" class="run" hidden/>
+		<img src="img/person/run8.png" alt="" class="run" hidden/>
+		
+		<!--跳跃 一种姿势：不容易确定-->
+		<img src="img/person/run3.png" alt="" class="jump" hidden/>
+		
+		<!--障碍物-->
+		<img src="img/hinder/boom.png" alt="" class="hinder" hidden/>
+		<img src="img/hinder/chick.png" alt="" class="hinder" hidden/>
+		<img src="img/hinder/egg.png" alt="" class="hinder" hidden/>
+		<img src="img/hinder/flow.png" alt="" class="hinder" hidden/>
+		<img src="img/hinder/grass.png" alt="" class="hinder" hidden/>
+		<img src="img/hinder/pail.png" alt="" class="hinder" hidden/>
+		<img src="img/hinder/stone.png" alt="" class="hinder" hidden/>
+		<img src="img/hinder/ys.png" alt="" class="hinder" hidden/>
+		<img src="img/hinder/tree.png" alt="" class="hinder" hidden/>
+		
+	</body>
+	<script>
+		window.onload=function(){
+			var canvas=document.querySelector("canvas");
+			var cobj=canvas.getContext("2d");
+			var runImg=document.querySelectorAll(".run");
+            var jumpImg=document.querySelectorAll(".jump");
+            var hinderImg=document.querySelectorAll(".hinder");
+            console.log(hinderImg);
+			
+			var gameObj=new game(canvas,cobj,runImg,jumpImg,hinderImg);
+			
+			
+			/*onresize 事件会在窗口或框架被调整大小时发生*/
+			/*canvas的宽高为浏览器的宽高*/
+			window.onresize=function(){
+				canvas.width=document.documentElement.clientWidth;
+				canvas.height=document.documentElement.clientHeight;
+				/*图片宽高适应屏幕变化*/
+				if(canvas.width/650>canvas.height/650){
+					canvas.style.backgroundSize="contain";
+				}else{
+					canvas.style.backgroundSize="cover";
+				}
+				/*人物适应屏幕变化
+				 * 人物在y轴的偏移量：*/
+				gameObj.person.y=canvas.height/1.5-gameObj.person.height; 
+				console.log(gameObj.person.y)
+				gameObj.person.draw();
+				
+				/*障碍物适应屏幕变化*/
+				for(var i=0;i<gameObj.hiderArr.length;i++){
+                  gameObj.hiderArr[i].y=canvas.height/1.5-gameObj.hiderArr[i].height;
+              	}
+			}
+			window.onresize();  
+			
+			/*刚进来时候调用：
+			 * onresize 只有在窗口调整大小的时候才会发生
+			 * 所以刚进来调用，避免刚进来看不到画布
+			 * */
+			
+			gameObj.play();
+			
+		}
+	</script>
+</html>
